@@ -477,8 +477,12 @@ var products=[
 var money=function(n){return "\u20B9"+n.toLocaleString("en-IN")};
 $("#heroArt").innerHTML=art("premium");
 $("#productGrid").innerHTML=products.map(function(p){
- return '<article class="card reveal"><div class="img"><img src="'+p.img+'" alt="'+p.name+'" loading="lazy"></div><div class="body"><h3>'+p.name+'</h3><p>'+p.desc+'</p><div class="price-row"><span class="price">'+money(p.price)+'</span><button class="add" data-id="'+p.id+'">Add to Cart</button></div></div></article>';
+ return '<article class="card"><div class="img"><img src="'+p.img+'" alt="'+p.name+'" loading="lazy" onerror="this.parentNode.innerHTML=\'<div style=&quot;padding:40px;text-align:center;font-size:3rem;&quot;>🪴</div>\'"><div class="img-overlay"></div></div><div class="body"><h3>'+p.name+'</h3><p>'+p.desc+'</p><div class="price-row"><span class="price">'+money(p.price)+'</span><button class="add" data-id="'+p.id+'">Add to Cart</button></div></div></article>';
 }).join("");
+/* observe the newly injected product cards */
+if("IntersectionObserver" in window && typeof io!=="undefined"){
+ Array.prototype.forEach.call(document.querySelectorAll("#productGrid .reveal"),function(el){io.observe(el)})
+}
 
 /* ---------- Cart ---------- */
 var cart={};
